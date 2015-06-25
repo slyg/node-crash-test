@@ -1,23 +1,20 @@
-var app = require('express')();
-var cluster = require('cluster');
-var http = require('http');
-var numCPUs = +require('os').cpus().length;
-var WorkersPool = require('./helpers/WorkersPool');
-var logger = console;
+var cluster = require('cluster'),
+    http = require('http'),
+    numCPUs = +require('os').cpus().length,
+    WorkersPool = require('../helpers/WorkersPool');
 
 const PORT = 4000;
 const RESERVED_CPU = 1;
 
-app
-  .use(require('./middleware/domain')(app, logger))
-  .get('/', require('./middleware/ok'))
-  .get('/crash', require('./middleware/crash'))
-  .use(require('./middleware/errorHandler'))
-;
+module.exports = function(){
 
-if (cluster.isMaster) {
+  var logger = this.logger;
 
-  // handle workers pool
+  if (cluster.isWorker) {
+    this.httpServer = http.createServer(this).listen(PORT);
+    return this;
+  }
+
   var workersPool = new WorkersPool();
 
   workersPool.on('empty', function(){
@@ -38,7 +35,6 @@ if (cluster.isMaster) {
       workersPool.disconnect(worker);
 
       if (worker.suicide) {
-        // disconnect has been explicitly called in the code
         logger.info('[master] I will respawn a new worker to replace [worker %s]', worker.id);
         cluster.fork();
       }
@@ -55,6 +51,5 @@ if (cluster.isMaster) {
     cluster.fork();
   }
 
-} else {
-  app.httpServer = http.createServer(app).listen(PORT);
-}
+
+};

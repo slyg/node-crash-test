@@ -7,7 +7,7 @@ var
  * Constants
  */
 
-var KILL_SERVER_TIMEOUT = 1500; //ms
+var KILL_SERVER_TIMEOUT = 5000; //ms
 
 /**
  * Encloses each request in a domain, so that unhandled errors can

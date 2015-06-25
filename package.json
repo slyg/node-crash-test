@@ -5,11 +5,12 @@
   "main": "server.js",
   "dependencies": {
     "backbone": "^1.2.1",
-    "express": "^4.13.0"
+    "express": "^4.13.0",
+    "lodash": "^3.9.3"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC"
