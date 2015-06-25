@@ -15,6 +15,4 @@ var initializers = [
   listeners
 ];
 
-// initializers.forEach(initializers, function(initializer){ initializer.call(app); });
-
 _.each(initializers, function(initializer){ initializer.call(app); });

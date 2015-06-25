@@ -43,7 +43,7 @@ module.exports = function (app, logger) {
         killtimer.unref();
 
         // Log error
-        logger.error(util.format('[%s][domain] I stop listening to incoming requests, will kill myself within %sms', workerName, KILL_SERVER_TIMEOUT)/*, err*/);
+        logger.error(util.format('[%s][domain] I stop listening to incoming requests, will kill myself within %sms', workerName, KILL_SERVER_TIMEOUT), err);
 
         // stop taking new requests.
         app.httpServer.close(function () {
