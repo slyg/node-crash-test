@@ -1,6 +1,5 @@
 var backbone = require('backbone');
 
-
 /*
  * Worker instance model
  */
@@ -53,6 +52,5 @@ module.exports = backbone.Collection.extend({
     }
 
   }
-
 
 });
